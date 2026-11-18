@@ -1,16 +1,704 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ShipIt Sprint</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShipIt Sprint | DevOps Engineering</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080d1b;
+    --surface: #111a2e;
+    --surface2: #151f36;
+    --blue: #4f8cff;
+    --purple: #9270ff;
+    --text: #f4f7ff;
+    --muted: #9ba9c2;
+    --border: rgba(255,255,255,.09);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    width: 88%;
+    max-width: 1180px;
+    margin: auto;
+}
+
+nav {
+    height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-btn, .primary-btn {
+    background: linear-gradient(100deg, var(--blue), var(--purple));
+    color: white;
+    text-decoration: none;
+    padding: 12px 21px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-block;
+    transition: .3s;
+}
+
+.nav-btn:hover, .primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px #4f8cff44;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    color: white;
+    border: 0;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.hero {
+    padding: 105px 0 95px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    align-items: center;
+    gap: 65px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 7px 13px;
+    border: 1px solid #4f8cff55;
+    color: #8eb6ff;
+    border-radius: 30px;
+    font-size: 12px;
+    margin-bottom: 24px;
+    background: #4f8cff12;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 5vw, 65px);
+    line-height: 1.13;
+    letter-spacing: -2px;
+    margin-bottom: 23px;
+}
+
+.hero h1 span {
+    background: linear-gradient(90deg, #65a3ff, #ae8bff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 550px;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+
+.secondary-btn {
+    padding: 12px 21px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.terminal {
+    background: #10192b;
+    border: 1px solid #34425d;
+    border-radius: 15px;
+    padding: 23px;
+    box-shadow: 0 20px 70px #0008;
+    transform: rotate(1deg);
+}
+
+.terminal-top {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 27px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.red { background: #ff6464; }
+.yellow { background: #ffc45e; }
+.green { background: #45d69b; }
+
+.terminal-title {
+    color: #8c9dbb;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.terminal pre {
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 2.1;
+    color: #a9bddb;
+}
+
+.blue-text { color: #69a7ff; }
+.green-text { color: #4cdda0; }
+.purple-text { color: #b69aff; }
+
+section {
+    padding: 80px 0;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-heading small {
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.section-heading h2 {
+    font-size: 34px;
+    margin: 10px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-card, .feature-card, .team-card, .tech-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 26px;
+    transition: .3s;
+}
+
+.stat-card:hover, .feature-card:hover, .team-card:hover, .tech-card:hover {
+    transform: translateY(-5px);
+    border-color: #4f8cff88;
+}
+
+.stat-card h3 {
+    font-size: 29px;
+    color: #78aaff;
+}
+
+.stat-card p, .feature-card p, .team-card p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.features {
+    background: #0c1324;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feature-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #4f8cff1c;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.pipeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.pipeline-step {
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px 10px;
+    border-radius: 12px;
+}
+
+.pipeline-step .number {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(120deg, var(--blue), var(--purple));
+    display: grid;
+    place-items: center;
+    margin: 0 auto 14px;
+    font-weight: 700;
+}
+
+.pipeline-step h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.pipeline-step p {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.team {
+    background: #0c1324;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.team-card {
+    text-align: center;
+}
+
+.avatar {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.team-card h3 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.team-card .role {
+    color: #8fb5ff;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.tech-card {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.tech-card span {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 9px;
+}
+
+.cta {
+    text-align: center;
+    padding: 55px 25px;
+    background: linear-gradient(120deg, #172b50, #241d48);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.cta h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.cta p {
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 70px;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+@media(max-width: 850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 75px 0;
+    }
+    .feature-grid, .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .pipeline {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    .container { width: 91%; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 82px;
+        left: 0;
+        width: 100%;
+        padding: 25px;
+        background: #111a2e;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 10;
+    }
+    .nav-links.show { display: flex; }
+    .nav-btn { display: none; }
+    .menu-toggle { display: block; }
+    .hero h1 { font-size: 43px; }
+    .stats, .feature-grid, .team-grid {
+        grid-template-columns: 1fr;
+    }
+    .pipeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .section-heading h2 { font-size: 27px; }
+    .cta h2 { font-size: 24px; }
+}
+</style>
 </head>
+
 <body>
-    <h1>Welcome to ShipIt Sprint updated by bashir!</h1>
-    <p>Our DevOps team website is live.</p>
-    <p>Team Members:</p>
-    <ul>
-        <li>Bashirullah</li>
-        <li>Ikramullah</li>
-        <li>Abdulwaris</li>
+
+<header class="container">
+<nav>
+    <div class="logo">ShipIt<span>.</span>Sprint</div>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pipeline">Pipeline</a></li>
+        <li><a href="#team">Our Team</a></li>
     </ul>
+
+    <a class="nav-btn" href="#pipeline">Explore Project ↗</a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</nav>
+</header>
+
+<main>
+
+<section class="container hero" id="home">
+    <div>
+        <span class="tag">✦ OUR DEVOPS ENGINEERING PROJECT</span>
+        <h1>Build. Deploy.<br><span>Ship with Confidence.</span></h1>
+        <p>
+            ShipIt Sprint is a collaborative DevOps project focused on
+            automating deployments, managing infrastructure, and delivering
+            reliable web applications through modern CI/CD practices.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#about" class="primary-btn">Discover Our Project →</a>
+            <a href="#team" class="secondary-btn">Meet The Team</a>
+        </div>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-top">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">shipit-terminal</span>
+        </div>
+<pre>
+<span class="blue-text">$</span> git push origin main
+
+<span class="purple-text">✓</span> Code pushed successfully
+
+<span class="blue-text">$</span> github-actions run
+
+<span class="green-text">✓</span> Workflow completed
+<span class="green-text">✓</span> SSH connection established
+<span class="green-text">✓</span> Website deployed to EC2
+
+<span class="green-text">● Deployment pipeline ready</span>
+</pre>
+    </div>
+</section>
+
+<section class="container" id="about">
+    <div class="section-heading">
+        <small>ABOUT THE PROJECT</small>
+        <h2>Engineering Reliable Deployments</h2>
+        <p>One team. One workflow. A smarter way to ship software.</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <h3>03</h3>
+            <p>Collaborating Team Members</p>
+        </div>
+        <div class="stat-card">
+            <h3>CI/CD</h3>
+            <p>Automated Deployment Workflow</p>
+        </div>
+        <div class="stat-card">
+            <h3>AWS</h3>
+            <p>Cloud Infrastructure Platform</p>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+<div class="container">
+    <div class="section-heading">
+        <small>WHAT WE BUILD</small>
+        <h2>Project Capabilities</h2>
+        <p>Practical DevOps engineering from code to production.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">☁️</div>
+            <h3>Cloud Infrastructure</h3>
+            <p>Host and manage our application on an Ubuntu cloud server using AWS EC2.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>CI/CD Automation</h3>
+            <p>Use GitHub Actions to automate the deployment process after approved changes reach main.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Web Server</h3>
+            <p>Serve our website through Nginx with a structured and maintainable configuration.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Secure Access</h3>
+            <p>Manage individual Linux users, SSH keys, groups, and server permissions.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3>Version Control</h3>
+            <p>Collaborate through Git branches, pull requests, reviews, and controlled merges.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Monitoring & Scripts</h3>
+            <p>Build shell scripts and scheduled jobs to support server checks and traffic reporting.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="container" id="pipeline">
+    <div class="section-heading">
+        <small>OUR WORKFLOW</small>
+        <h2>From Code to Production</h2>
+        <p>A structured workflow for reliable software delivery.</p>
+    </div>
+
+    <div class="pipeline">
+        <div class="pipeline-step">
+            <div class="number">01</div>
+            <h4>Develop</h4>
+            <p>Write application code</p>
+        </div>
+        <div class="pipeline-step">
+            <div class="number">02</div>
+            <h4>Commit</h4>
+            <p>Push feature branch</p>
+        </div>
+        <div class="pipeline-step">
+            <div class="number">03</div>
+            <h4>Review</h4>
+            <p>Pull request approval</p>
+        </div>
+        <div class="pipeline-step">
+            <div class="number">04</div>
+            <h4>Automate</h4>
+            <p>GitHub Actions</p>
+        </div>
+        <div class="pipeline-step">
+            <div class="number">05</div>
+            <h4>Deploy</h4>
+            <p>Publish to AWS EC2</p>
+        </div>
+    </div>
+</section>
+
+<section class="team" id="team">
+<div class="container">
+    <div class="section-heading">
+        <small>THE PEOPLE BEHIND THE PROJECT</small>
+        <h2>Meet Our Team</h2>
+        <p>Three collaborators working together to ship better software.</p>
+    </div>
+
+    <div class="team-grid">
+        <div class="team-card">
+            <div class="avatar">B</div>
+            <h3>Bashirullah</h3>
+            <p class="role">DevOps Team Member</p>
+            <p>Cloud infrastructure, Linux administration and project coordination.</p>
+        </div>
+
+        <div class="team-card">
+            <div class="avatar">I</div>
+            <h3>Ikramullah</h3>
+            <p class="role">DevOps Team Member</p>
+            <p>Server administration, SSH access and infrastructure management.</p>
+        </div>
+
+        <div class="team-card">
+            <div class="avatar">A</div>
+            <h3>Abdulwaris</h3>
+            <p class="role">DevOps Team Member</p>
+            <p>Automation, application delivery and collaborative development.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="container">
+    <div class="section-heading">
+        <small>OUR TECHNOLOGY STACK</small>
+        <h2>Tools We Work With</h2>
+        <p>Technologies powering our DevOps workflow.</p>
+    </div>
+
+    <div class="tech-grid">
+        <div class="tech-card"><span>🐧</span>Ubuntu Linux</div>
+        <div class="tech-card"><span>☁️</span>AWS EC2</div>
+        <div class="tech-card"><span>🌐</span>Nginx</div>
+        <div class="tech-card"><span>🐙</span>GitHub</div>
+        <div class="tech-card"><span>⚙️</span>GitHub Actions</div>
+        <div class="tech-card"><span>🔧</span>Git</div>
+        <div class="tech-card"><span>📋</span>Jira</div>
+        <div class="tech-card"><span>💻</span>Shell Scripting</div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="cta">
+        <h2>Building Better. Deploying Smarter.</h2>
+        <p>ShipIt Sprint — learning, collaborating, and delivering with DevOps.</p>
+        <a href="#home" class="primary-btn">Back to Top ↑</a>
+    </div>
+</section>
+
+</main>
+
+<footer>
+<div class="container footer-inner">
+    <div>© 2026 ShipIt Sprint. All rights reserved.</div>
+    <div>Built with teamwork & DevOps engineering.</div>
+</div>
+</footer>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("show");
+}
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+        document.getElementById("navLinks").classList.remove("show");
+    });
+});
+</script>
+
 </body>
 </html>
+
