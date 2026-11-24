@@ -40,6 +40,6 @@ jobs:
 
       - name: Verify website
         run: |
-          ssh deploy@${{ vars.DEPLOY_HOST }} "curl -fsS -H 'Host: shipit-sprint.duckdns.org' http://localhost/ > /dev/null"
+          ssh deploy@${{ vars.DEPLOY_HOST }} "curl -kfsS --resolve shipit-sprint.duckdns.org:443:127.0.0.1 https://shipit-sprint.duckdns.org/ > /dev/null"
 
 
